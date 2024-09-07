@@ -14,11 +14,6 @@ for key in "${private_keys_array[@]}"; do
   [ ${#key} -ne 64 ] && echo_blue_bold "${RED}오류: 프라이빗 키는 64자리 16진수 문자열이어야 합니다.${NC}" && exit 1
 done
 
-# 기존 파일 삭제 및 새로운 파일 생성
-[ -f privatekeys.txt ] && rm privatekeys.txt && echo_blue_bold "기존 privatekeys.txt 파일을 삭제했습니다."
-printf "%s\n" "${private_keys_array[@]}" > privatekeys.txt
-echo_blue_bold "새로운 privatekeys.txt 파일이 생성되고 프라이빗 키가 추가되었습니다."
-
 # ethers 패키지 설치 확인
 if ! npm list ethers@5.5.4 >/dev/null 2>&1; then
   echo_blue_bold "ethers 패키지를 설치 중..." && npm install ethers@5.5.4
@@ -28,11 +23,10 @@ fi
 
 # Node.js 스크립트 실행
 NODE_PATH=$(npm root -g):$(pwd)/node_modules node - << 'EOF'
-const fs = require("fs");
 const ethers = require("ethers");
 
-// 프라이빗 키와 설정 불러오기
-const privateKeys = fs.readFileSync("privatekeys.txt", "utf8").trim().split("\n");
+// 사용자로부터 프라이빗 키를 받음
+const privateKeys = process.env.PRIVATE_KEYS.split(',');
 const provider = new ethers.providers.JsonRpcProvider("https://testnet-rpc.plumenetwork.xyz/http");
 const contractAddress = "0x8Dc5b3f1CcC75604710d9F464e3C5D2dfCAb60d8";
 const transactionData = "0x183ff085";
@@ -79,5 +73,7 @@ async function main() {
 main().catch(console.error);
 EOF
 
+# 메모리에서 프라이빗 키 삭제
+unset user_private_keys private_keys_array
 echo -e "${GREEN}모든 작업이 완료되었습니다.${NC}"
-echo -e "${GREEN}fin${NC}"
+echo -e "${GREEN}FIN AND DEL ${NC}"
