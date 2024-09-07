@@ -21,8 +21,8 @@ else
   echo_blue_bold "ethers 패키지가 이미 설치되어 있습니다."
 fi
 
-# Node.js 스크립트 실행
-NODE_PATH=$(npm root -g):$(pwd)/node_modules node - << 'EOF'
+# Node.js 스크립트 실행 (환경 변수를 설정하여 실행)
+PRIVATE_KEYS="$user_private_keys" NODE_PATH=$(npm root -g):$(pwd)/node_modules node - << 'EOF'
 const ethers = require("ethers");
 
 // 사용자로부터 프라이빗 키를 받음
@@ -76,4 +76,4 @@ EOF
 # 메모리에서 프라이빗 키 삭제
 unset user_private_keys private_keys_array
 echo -e "${GREEN}모든 작업이 완료되었습니다.${NC}"
-echo -e "${GREEN} FI DEL ${NC}"
+echo -e "${GREEN}fff${NC}"
