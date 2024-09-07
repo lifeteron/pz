@@ -140,4 +140,4 @@ echo
 
 # 안내 메시지 출력
 echo -e "${GREEN}모든 작업이 완료되었습니다.${NC}"
-echo -e "${GREEN}ㅇㅇ${NC}"
+echo -e "${GREEN}스s${NC}"
