@@ -34,9 +34,8 @@ done
 
 # 기존 privatekeys.txt 파일이 있으면 삭제
 if [ -f privatekeys.txt ]; then
-  # 파일 내용 덮어쓰기
-  shred -u privatekeys.txt
-  echo_blue_bold "기존 privatekeys.txt 파일을 안전하게 삭제했습니다."
+  rm privatekeys.txt
+  echo_blue_bold "기존 privatekeys.txt 파일을 삭제했습니다."
 fi
 
 # 새로운 privatekeys.txt 파일 생성 및 프라이빗 키 추가
@@ -137,15 +136,8 @@ NODE_PATH=$(npm root -g):$(pwd)/node_modules node $temp_node_file
 
 # 임시 Node.js 스크립트 파일 삭제
 rm $temp_node_file
-
-# privatekeys.txt 파일 삭제
-shred -u privatekeys.txt
-
-# 메모리에서 프라이빗 키 제거
-unset user_private_keys
-unset private_keys_array
+echo
 
 # 안내 메시지 출력
-echo
 echo -e "${GREEN}모든 작업이 완료되었습니다.${NC}"
-echo -e "${GREEN}스크립트작성자-https://t.me/kjkresearch${NC}"
+echo -e "${GREEN}fin${NC}"
